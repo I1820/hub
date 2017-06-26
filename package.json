@@ -1,0 +1,19 @@
+{
+  "name": "i1820.rpi.js",
+  "version": "1.0.0",
+  "description": "I1820 Raspberry Plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/I1820/RPi.js.git"
+  },
+  "author": "Parham Alvani <parham.alvani@gmail.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/I1820/RPi.js/issues"
+  },
+  "homepage": "https://github.com/I1820/RPi.js#readme"
+}
