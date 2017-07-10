@@ -13,28 +13,35 @@ const EventEmitter = require('events')
 const I1820Thing = require('./thing')
 
 class I1820Client extends EventEmitter {
-  constructor (url, name, tenantId) {
+  constructor (url, tenant, name) {
     super()
 
     this.client = mqtt.connect(url, {
-      clientId: `I1820/${tenantId}/agent/${name}`
+      clientId: `I1820/${tenant}/agent/${name}`
     })
 
+    this.client.subscribe([
+      `I1820/${tenant}/agent/${name}`
+    ])
+
     this.client.on('message', (topic, message, packet) => {
-      if (topic === `I1820/${tenantId}/agent/${name}`) {
+      if (topic === `I1820/${tenant}/agent/${name}`) {
         this._id = message
         this.emit('ready')
-      } else if (topic === `I1820/${tenantId}/configuration`) {
+        this._start()
+      } else if (topic === `I1820/${tenant}/configuration`) {
       }
     })
 
-    this.tenantId = tenantId
+    this.tenant = tenant
     this.name = name
     this.things = []
+  }
 
+  _start () {
     setInterval(() => {
-      this.client.publish(`I1820/${this.tenantId}/agent/ping`)
-    }, 10)
+      this.client.publish(`I1820/${this.tenant}/agent/ping`)
+    }, 10000)
   }
 
   addThing (id, type) {
