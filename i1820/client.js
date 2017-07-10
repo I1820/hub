@@ -26,7 +26,7 @@ class I1820Client extends EventEmitter {
 
     this.client.on('message', (topic, message, packet) => {
       if (topic === `I1820/${tenant}/agent/${name}`) {
-        this._id = message
+        this._id = message.toString()
         this.emit('ready')
         this._start()
       } else if (topic === `I1820/${tenant}/configuration`) {
