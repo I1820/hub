@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/I1820/RPi.js#readme",
   "dependencies": {
+    "lokijs": "^1.5.0",
     "mqtt": "^2.9.0"
   },
   "devDependencies": {
