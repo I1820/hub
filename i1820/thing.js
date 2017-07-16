@@ -7,15 +7,25 @@
  * | File Name:     thing.js
  * +===============================================
  */
+const EventEmitter = require('events')
 
+class I1820Thing extends EventEmitter {
+  constructor (id, type, logs) {
+    super()
 
-class I1820Thing {
-  construtor(client, id, agentId, type) {
-    this.client = client;
-    this.id = id;
-    this.agentId = id;
-    this.type = type;
+    this.id = id
+    this.type = type
+    this.logs = logs
+  }
+
+  log (state) {
+    this.logs.insert({
+      id: this.id,
+      type: this.type,
+      timestamp: Date.now(),
+      state
+    })
   }
 }
 
-module.exports = I1820Thing;
+module.exports = I1820Thing
