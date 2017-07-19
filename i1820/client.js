@@ -8,28 +8,33 @@
  * +===============================================
  */
 const mqtt = require('mqtt')
+const Loki = require('lokijs')
 const EventEmitter = require('events')
 
 const I1820Thing = require('./thing')
+const Message = require('./message')
 
 class I1820Client extends EventEmitter {
   constructor (url, tenant, name) {
     super()
+
+    this.db = new Loki('I1820')
+    this.logs = this.db.addCollection('logs')
 
     this.client = mqtt.connect(url, {
       clientId: `I1820/${tenant}/agent/${name}`
     })
 
     this.client.subscribe([
-      `I1820/${tenant}/agent/${name}`
+      `I1820/${tenant}/agent/${name}`,
+      `I1820/${tenant}/agent/configuration`
     ])
 
     this.client.on('message', (topic, message, packet) => {
       if (topic === `I1820/${tenant}/agent/${name}`) {
-        this._id = message.toString()
+        this.hash = message.toString()
         this.emit('ready')
         this._start()
-      } else if (topic === `I1820/${tenant}/configuration`) {
       }
     })
 
@@ -40,12 +45,19 @@ class I1820Client extends EventEmitter {
 
   _start () {
     setInterval(() => {
-      this.client.publish(`I1820/${this.tenant}/agent/ping`)
+      /* ping */
+      this.client.publish(`I1820/${this.tenant}/agent/ping`,
+        JSON.stringify(new Message(this.hash, this.name, null)))
     }, 10000)
+    setInterval(() => {
+      /* log */
+      this.client.publish(`I1820/${this.tenant}/agent/log`,
+        JSON.stringify(new Message(this.hash, this.name)))
+    }, 50000)
   }
 
   addThing (id, type) {
-    const t = new I1820Thing(this.client, id, null, type)
+    const t = new I1820Thing(id, type, this.logs)
     this.things.push(t)
     return t
   }
