@@ -20,6 +20,10 @@ class I1820Client extends EventEmitter {
 
     this.db = new Loki('I1820')
     this.logs = this.db.addCollection('logs')
+    this.tenant = tenant
+    this.hash = null
+    this.name = name
+    this.things = []
 
     this.client = mqtt.connect(url, {
       clientId: `I1820/${tenant}/agent/${name}`
@@ -31,28 +35,25 @@ class I1820Client extends EventEmitter {
     ])
 
     this.client.on('message', (topic, message, packet) => {
-      if (topic === `I1820/${tenant}/agent/${name}`) {
+      console.log(topic)
+      if (topic === `I1820/${tenant}/agent/${name}` && !this.hash) {
         this.hash = message.toString()
         this.emit('ready')
         this._start()
       }
     })
-
-    this.tenant = tenant
-    this.name = name
-    this.things = []
   }
 
   _start () {
     setInterval(() => {
       /* ping */
       this.client.publish(`I1820/${this.tenant}/agent/ping`,
-        JSON.stringify(new Message(this.hash, this.name, null)))
+        JSON.stringify(new Message(this.hash, this.name, '')))
     }, 10000)
     setInterval(() => {
       /* log */
       this.client.publish(`I1820/${this.tenant}/agent/log`,
-        JSON.stringify(new Message(this.hash, this.name)))
+        JSON.stringify(new Message(this.hash, this.name, '')))
     }, 50000)
   }
 
