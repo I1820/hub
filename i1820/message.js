@@ -13,19 +13,21 @@ class Message {
     return '2.1'
   }
 
-  construcotr (hash, thingId, name, data) {
+  constructor (hash, thingId, name, data) {
     this.hash = hash
     this.name = name
     this.data = data
   }
 
   toJSON () {
-    return JSON.stringify({
+    console.log(this)
+    console.log(JSON.stringify({
       version: this.version,
       hash: this.hash,
       name: this.name,
       data: this.data
-    })
+    }))
+    return "{}"
   }
 
   static fromJSON (payload) {
