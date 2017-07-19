@@ -20,14 +20,12 @@ class Message {
   }
 
   toJSON () {
-    console.log(this)
-    console.log(JSON.stringify({
+    return JSON.stringify({
       version: this.version,
       hash: this.hash,
       name: this.name,
       data: this.data
-    }))
-    return "{}"
+    })
   }
 
   static fromJSON (payload) {
