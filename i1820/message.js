@@ -10,22 +10,22 @@
 
 class Message {
   static version () {
-    return '2.2'
+    return '2.3'
   }
 
-  constructor (hash, thingId, name, data) {
+  constructor (hash, name, data) {
     this.hash = hash
     this.name = name
     this.data = data
   }
 
   toJSON () {
-    return JSON.stringify({
+    return {
       version: this.version(),
       hash: this.hash,
       name: this.name,
       data: this.data
-    })
+    }
   }
 
   static fromJSON (payload) {
