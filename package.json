@@ -1,5 +1,5 @@
 {
-  "name": "i1820.rpi.js",
+  "name": "@i1820/rpi.js",
   "version": "1.0.0",
   "description": "I1820 Raspberry Plugin",
   "main": "index.js",
