@@ -52,8 +52,12 @@ class I1820Client extends EventEmitter {
     }, 10000)
     setInterval(() => {
       /* log */
-      this.client.publish(`I1820/${this.tenant}/agent/log`,
-        JSON.stringify(new Message(this.hash, this.name, '')))
+      this.logs.where((log) => {
+        console.log(log)
+        this.client.publish(`I1820/${this.tenant}/agent/log`,
+          JSON.stringify(new Message(this.hash, this.name, log)))
+        this.logs.remove(log)
+      })
     }, 50000)
   }
 
