@@ -1,5 +1,5 @@
-# RPi.js
+# Bamboo Gateway Library
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](http://standardjs.com)
 
 ## Introduction
-I1820 Raspberry Plugin in Node.js. This is a gateway actually and can store and send data into I1820.
+Bamboo gateway library in Node.js. This gateway can store and then send data into Bamboo platform.
