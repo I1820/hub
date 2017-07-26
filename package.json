@@ -1,21 +1,21 @@
 {
-  "name": "@i1820/rpi.js",
-  "version": "1.5.0",
-  "description": "I1820 Raspberry Plugin",
+  "name": "@ibambil/rpi.js",
+  "version": "2.0.0",
+  "description": "Bamboo gateway library",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/I1820/RPi.js.git"
+    "url": "git+https://github.com/bambil/bamboo-rpi.git"
   },
   "author": "Parham Alvani <parham.alvani@gmail.com>",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/I1820/RPi.js/issues"
+    "url": "https://github.com/bambil/bamboo-rpi/issues"
   },
-  "homepage": "https://github.com/I1820/RPi.js#readme",
+  "homepage": "https://github.com/bambil/bamboo-rpi#readme",
   "dependencies": {
     "lokijs": "^1.5.0",
     "mqtt": "^2.9.0"
