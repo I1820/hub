@@ -9,7 +9,7 @@
  */
 const EventEmitter = require('events')
 
-class I1820Thing extends EventEmitter {
+class BambooThing extends EventEmitter {
   constructor (id, type, logs) {
     super()
 
@@ -28,4 +28,4 @@ class I1820Thing extends EventEmitter {
   }
 }
 
-module.exports = I1820Thing
+module.exports = BambooThing
