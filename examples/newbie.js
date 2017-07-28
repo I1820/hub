@@ -1,6 +1,6 @@
-const i1820 = require('../')
+const bamboo = require('../')
 
-let client = new i1820.I1820Client('mqtt://127.0.0.1', 'parham_home', 'Newbie')
+let client = new bamboo.BambooClient('mqtt://127.0.0.1', 'parham_home', 'Newbie')
 client.on('ready', () => {
   console.log(client.hash)
 })
