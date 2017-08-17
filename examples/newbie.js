@@ -10,4 +10,4 @@ setInterval(() => {
     temperature: 10
   })
   console.log('log temperature')
-}, 1000)
+}, 10000)
