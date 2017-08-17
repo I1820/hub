@@ -35,7 +35,6 @@ class BambooClient extends EventEmitter {
     ])
 
     this.client.on('message', (topic, message, packet) => {
-      console.log(topic)
       if (topic === `Bamboo/${tenant}/agent/${name}` && !this.hash) {
         this.hash = message.toString()
         this.emit('ready')
@@ -45,11 +44,6 @@ class BambooClient extends EventEmitter {
   }
 
   _start () {
-    setInterval(() => {
-      /* ping */
-      this.client.publish(`Bamboo/${this.tenant}/agent/ping`,
-        JSON.stringify(new Message(this.hash, this.name, '')))
-    }, 10000)
     setInterval(() => {
       /* log */
       this.logs.where((log) => {
