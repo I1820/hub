@@ -47,17 +47,27 @@ class BambooClient extends EventEmitter {
     setInterval(() => {
       /* log */
       this.logs.where((log) => {
-        console.log(log)
         this.client.publish(`Bamboo/${this.tenant}/agent/log`,
           JSON.stringify(new Message(this.hash, this.name, log)))
         this.logs.remove(log)
       })
     }, 50000)
+
+    /* discovery */
+    this.client.publish(`Bamboo/${this.tenant}/agent/discovery`,
+      JSON.stringify(new Message(this.hash, this.name, {things: this.things})))
   }
 
   addThing (id, type) {
     const t = new BambooThing(id, type, this.logs)
     this.things.push(t)
+
+    if (this.hash) {
+      /* Publishes things change when we are connected */
+      this.client.publish(`Bamboo/${this.tenant}/agent/discovery`,
+        JSON.stringify(new Message(this.hash, this.name, {things: this.things})))
+    }
+
     return t
   }
 }
