@@ -54,8 +54,15 @@ class BambooClient extends EventEmitter {
     }, 50000)
 
     /* discovery */
+    let things = []
+    this.things.forEach((thing) => {
+      things.push({
+        id: thing.id,
+        type: thing.type
+      })
+    })
     this.client.publish(`Bamboo/${this.tenant}/agent/discovery`,
-      JSON.stringify(new Message(this.hash, this.name, {things: this.things})))
+      JSON.stringify(new Message(this.hash, this.name, {things})))
   }
 
   addThing (id, type) {
@@ -64,8 +71,15 @@ class BambooClient extends EventEmitter {
 
     if (this.hash) {
       /* Publishes things change when we are connected */
+      let things = []
+      this.things.forEach((thing) => {
+        things.push({
+          id: thing.id,
+          type: thing.type
+        })
+      })
       this.client.publish(`Bamboo/${this.tenant}/agent/discovery`,
-        JSON.stringify(new Message(this.hash, this.name, {things: this.things})))
+        JSON.stringify(new Message(this.hash, this.name, {things})))
     }
 
     return t
