@@ -46,6 +46,7 @@ class BambooClient extends EventEmitter {
   _start () {
     setInterval(() => {
       /* log */
+      this.emit('log')
       this.logs.where((log) => {
         this.client.publish(`Bamboo/${this.tenant}/agent/log`,
           JSON.stringify(new Message(this.hash, this.name, log)))
