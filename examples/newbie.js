@@ -4,7 +4,7 @@ let client = new bamboo.BambooClient('mqtt://127.0.0.1', 'parham_home', 'Newbie'
 client.on('ready', () => {
   console.log(client.hash)
 })
-const t1 = client.addThing('7:1', 'temperature')
+const t1 = client.addThing('7:1', '.standard.temperature')
 setInterval(() => {
   t1.log({
     temperature: 10
