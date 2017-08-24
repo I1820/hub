@@ -1,5 +1,7 @@
-const BambooClient = require('./src/client')
+const BambooClient = require('./lib/client')
+const BambooLogger = require('./lib/logger')
 
 module.exports = {
-  BambooClient
+  BambooClient,
+  BambooLogger
 }
