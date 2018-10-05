@@ -1,6 +1,6 @@
 {
   "name": "@i1820/hub",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "I1820 Platform - hub library",
   "main": "index.js",
   "scripts": {
