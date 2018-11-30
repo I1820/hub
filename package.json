@@ -25,6 +25,7 @@
   "devDependencies": {
     "@types/mqtt": "^2.5.0",
     "@types/node": "^10.12.11",
+    "tslint": "^5.11.0",
     "typescript": "^3.2.1"
   }
 }
