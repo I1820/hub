@@ -7,25 +7,44 @@
  * | File Name:     client.js
  * +===============================================
  */
-const mqtt = require('mqtt')
-const EventEmitter = require('events')
+import { connect, Client } from 'mqtt';
+import { EventEmitter } from 'events';
+
+interface State {
+  at: Date;
+  value: any;
+}
+
+interface Message {
+  [key: string]: State;
+}
 
 /**
  * I1820Client represents a thing in I1820 platform
  * it must have a key and an identification from I1820
  * that are provided by user in constructor.
  */
-class I1820Client extends EventEmitter {
-  constructor (url, id, key) {
+export class I1820Client extends EventEmitter {
+  /**
+   * device identification
+   */
+  private id: string;
+
+  /**
+   * device access key
+   */
+  private key: string
+
+  private client: Client;
+
+  constructor (url: string, id: string, key: string) {
     super()
 
-    // device access key
     this.key = key
-    // device identification
     this.id = id
 
     // connects to mqtt broker
-    this.client = mqtt.connect(url, {
+    this.client = connect(url, {
       username: this.key
     })
 
@@ -40,9 +59,10 @@ class I1820Client extends EventEmitter {
    * states must have following structure:
    * { temperature: 10 }
    */
-  log (states) {
-    var message = {}
-    for (var state in states) {
+  public log (states: any): void {
+    var message: Message = {};
+
+    for (const state in states) {
       message[state] = {
         at: new Date(),
         value: states[state]
@@ -51,5 +71,3 @@ class I1820Client extends EventEmitter {
     this.client.publish(`things/${this.id}/state`, JSON.stringify(message))
   }
 }
-
-module.exports = I1820Client
