@@ -7,7 +7,7 @@
   "scripts": {
     "prepublish": "npm run build",
     "build": "tsc",
-    "test": "tslint -c tslint.json 'src/**/*.ts'"
+    "test": "tslint -c tslint.json -p tsconfig.json 'lib/**/*.ts' && jest"
   },
   "repository": {
     "type": "git",
@@ -23,8 +23,11 @@
     "mqtt": "^2.18.8"
   },
   "devDependencies": {
+    "@types/jest": "^23.3.10",
     "@types/mqtt": "^2.5.0",
     "@types/node": "^10.12.11",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.5",
     "tslint": "^5.11.0",
     "tslint-microsoft-contrib": "^5.2.1",
     "typescript": "^3.2.1"
