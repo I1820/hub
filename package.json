@@ -7,7 +7,7 @@
   "scripts": {
     "prepublish": "npm run build",
     "build": "tsc",
-    "test": "tslint -c tslint.json -p tsconfig.json 'lib/**/*.ts' && jest"
+    "test": "tslint -c tslint.json -p tsconfig.json 'lib/**/*.ts' && jest --coverage"
   },
   "repository": {
     "type": "git",
