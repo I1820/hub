@@ -10,11 +10,11 @@
 import { EventEmitter } from 'events';
 import { Client, connect } from 'mqtt';
 
-type Value = number | object | string | boolean | Value[];
+type Value = number | object | string | boolean;
 
 interface IState {
   at: Date;
-  value: Value;
+  value: Value | Value[];
 }
 
 interface IMessage {
@@ -61,7 +61,7 @@ export class Thing extends EventEmitter {
    * states must have following structure:
    * { temperature: 10 }
    */
-  public log(states: { [key: string]: Value }): void {
+  public log(states: { [key: string]: Value | Value[] }): void {
     const message: IMessage = {};
 
     for (const state of Object.keys(states)) {
