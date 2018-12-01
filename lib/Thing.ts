@@ -7,24 +7,26 @@
  * | File Name:     client.js
  * +===============================================
  */
-import { connect, Client } from 'mqtt';
 import { EventEmitter } from 'events';
+import { Client, connect } from 'mqtt';
 
-interface State {
+type Value = number | object | string | boolean | Value[];
+
+interface IState {
   at: Date;
-  value: any;
+  value: Value;
 }
 
-interface Message {
-  [key: string]: State;
+interface IMessage {
+  [key: string]: IState;
 }
 
 /**
- * I1820Client represents a thing in I1820 platform
+ * Thing represents a thing in I1820 platform
  * it must have a key and an identification from I1820
  * that are provided by user in constructor.
  */
-export class I1820Client extends EventEmitter {
+export class Thing extends EventEmitter {
   /**
    * device identification
    */
@@ -33,25 +35,25 @@ export class I1820Client extends EventEmitter {
   /**
    * device access key
    */
-  private key: string
+  private key: string;
 
   private client: Client;
 
-  constructor (url: string, id: string, key: string) {
-    super()
+  constructor(url: string, id: string, key: string) {
+    super();
 
-    this.key = key
-    this.id = id
+    this.key = key;
+    this.id = id;
 
     // connects to mqtt broker
     this.client = connect(url, {
       username: this.key
-    })
+    });
 
     // emit ready message when we are connected to broker
     this.client.on('connect', () => {
-      this.emit('ready')
-    })
+      this.emit('ready');
+    });
   }
 
   /**
@@ -59,15 +61,15 @@ export class I1820Client extends EventEmitter {
    * states must have following structure:
    * { temperature: 10 }
    */
-  public log (states: any): void {
-    var message: Message = {};
+  public log(states: { [key: string]: Value }): void {
+    const message: IMessage = {};
 
-    for (const state in states) {
+    for (const state of Object.keys(states)) {
       message[state] = {
         at: new Date(),
         value: states[state]
-      }
+      };
     }
-    this.client.publish(`things/${this.id}/state`, JSON.stringify(message))
+    this.client.publish(`things/${this.id}/state`, JSON.stringify(message));
   }
 }
